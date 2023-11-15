@@ -1,0 +1,26 @@
+/**USE DICTIONARY TABLES**/
+
+PROC SQL;
+CREATE TABLE SASHELP_Tables AS
+SELECT DISTINCT
+	libname, 
+	memname, 
+	memtype, 
+	memlabel, 
+	typemem, 
+	crdate, 
+	modate, 
+	nobs, 
+	obslen, 
+	nvar,  
+	compress,
+	encrypt,
+	npage,
+	filesize,
+	monotonic() as n
+FROM dictionary.TABLES
+WHERE LIBNAME = 'SASHELP';
+
+SELECT MAX(n) into :maxset from SASHELP_Tables; QUIT;
+
+%put &maxset
